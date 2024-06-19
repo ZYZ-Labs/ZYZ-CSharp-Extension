@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZYZ_CSharp_Extension.Encrypt
 {
-    internal interface IEncrypt
+    public interface IEncrypt
     {
         /// <summary>
         /// 加密使用十六进制输出

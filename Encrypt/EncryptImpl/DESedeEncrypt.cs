@@ -1,23 +1,20 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Crypto.Engines;
-using Org.BouncyCastle.Crypto.Modes;
-using Org.BouncyCastle.Crypto.Parameters;
+﻿using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using ZYZ_CSharp_Extension.Core;
-
 
 namespace ZYZ_CSharp_Extension.Encrypt.EncryptImpl
 {
-    public class AESEncrypt : IEncrypt
+    public class DESedeEncrypt : IEncrypt
     {
-        private const int BLOCK_SIZE = 16;
+        private const int BLOCK_SIZE = 8;
         private readonly IEncryptConfig iEncryptConfig;
 
-        public AESEncrypt(IEncryptConfig encryptConfig)
+        public DESedeEncrypt(IEncryptConfig encryptConfig)
         {
             iEncryptConfig = encryptConfig;
             ValidateConfig();
@@ -25,7 +22,7 @@ namespace ZYZ_CSharp_Extension.Encrypt.EncryptImpl
 
         private void ValidateConfig()
         {
-            if (iEncryptConfig.Key().Length != 16 && iEncryptConfig.Key().Length != 24 && iEncryptConfig.Key().Length != 32)
+            if (iEncryptConfig.Key().Length != 16 && iEncryptConfig.Key().Length != 24)
             {
                 throw new EncryptException("Key size error");
             }

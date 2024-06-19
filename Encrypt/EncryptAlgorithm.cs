@@ -17,4 +17,19 @@ namespace ZYZ_CSharp_Extension.Encrypt
         RSA,
         SM4
     }
+    public static class EncryptAlgorithmExtensions
+    {
+        public static string GetAlgorithm(this EncryptAlgorithm encryptAlgorithm)
+        {
+            return encryptAlgorithm switch
+            {
+                EncryptAlgorithm.AES => "AES",
+                EncryptAlgorithm.DES => "DES",
+                EncryptAlgorithm.DESede => "DESede",
+                EncryptAlgorithm.RSA => "RSA",
+                EncryptAlgorithm.SM4 => "SM4",
+                _ => throw new ArgumentOutOfRangeException(nameof(encryptAlgorithm), encryptAlgorithm, null),
+            };
+        }
+    }
 }
