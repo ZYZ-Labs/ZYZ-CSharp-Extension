@@ -1,4 +1,4 @@
-﻿namespace ZYZ_C__Extension
+﻿namespace ZYZ_CSharp_Extension
 {
     public class Class1
     {
