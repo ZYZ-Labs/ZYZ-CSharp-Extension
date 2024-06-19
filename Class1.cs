@@ -1,6 +1,6 @@
 ﻿namespace ZYZ_CSharp_Extension
 {
-    public class Class1
+    public class ZYZ_CSharp_Extension
     {
 
     }
