@@ -9,7 +9,11 @@ namespace ZYZ_CSharp_Extension.Core
     public static class ConvertUtils
     {
 
-        // Helper method to convert hex string to byte array
+        /// <summary>
+        /// Hex转Byte数组
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
         public static byte[] HexStringToByteArray(string hex)
         {
             int numberChars = hex.Length;
