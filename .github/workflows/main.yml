@@ -13,7 +13,7 @@ on:
       - '.github/**'
 
 jobs:
-  build_and_pack:
+  build_and_release:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,13 +28,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Build
+    - name: Build and generate NuGet package
       run: dotnet build --configuration Release --output ${{ github.workspace }}/build
-      # ^^^^^ 更改: 明确指定了输出目录为 GitHub Actions 工作区的 `build` 文件夹
-
-    - name: Pack
-      run: dotnet pack --no-build --configuration Release --output ${{ github.workspace }}/nupkgs
-      # ^^^^^ 更改: 确保 dotnet pack 使用和 dotnet build 相同的输出目录，这里不再需要单独设置 PackageOutputPath
+      # 构建的同时生成 NuGet 包，因为 GeneratePackageOnBuild 设置为 True
 
     - name: Create Release
       id: create_release
@@ -53,6 +49,16 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/nupkgs/*.nupkg
-        asset_name: ZYZ_CSharp_Extension.nupkg
+        asset_path: ${{ github.workspace }}/build/*.nupkg
+        asset_name: ZYZ_CSharp_Extension-${{ github.run_number }}.nupkg
         asset_content_type: application/zip
+
+    - name: Upload Release Asset (DLL files)
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ github.workspace }}/build/*.dll
+        asset_name: ZYZ_CSharp_Extension-${{ github.run_number }}.dll
+        asset_content_type: application/octet-stream
