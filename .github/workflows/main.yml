@@ -29,10 +29,12 @@ jobs:
       run: dotnet restore
 
     - name: Build
-      run: dotnet build --no-restore --configuration Release --output ${{ github.workspace }}/build
+      run: dotnet build --configuration Release --output ${{ github.workspace }}/build
+      # ^^^^^ 更改: 明确指定了输出目录为 GitHub Actions 工作区的 `build` 文件夹
 
     - name: Pack
-      run: dotnet pack --no-build --configuration Release --output ${{ github.workspace }}/nupkgs /p:PackageOutputPath=${{ github.workspace }}/build
+      run: dotnet pack --no-build --configuration Release --output ${{ github.workspace }}/nupkgs
+      # ^^^^^ 更改: 确保 dotnet pack 使用和 dotnet build 相同的输出目录，这里不再需要单独设置 PackageOutputPath
 
     - name: Create Release
       id: create_release
@@ -40,8 +42,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.extract_version.outputs.version }}
-        release_name: Release v${{ steps.extract_version.outputs.version }}
+        tag_name: v${{ github.run_number }}
+        release_name: Release v${{ github.run_number }}
         draft: false
         prerelease: false
 
@@ -54,13 +56,3 @@ jobs:
         asset_path: ${{ github.workspace }}/nupkgs/*.nupkg
         asset_name: ZYZ_CSharp_Extension.nupkg
         asset_content_type: application/zip
-
-    - name: Upload Release Asset (DLL)
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/build/*.dll
-        asset_name: ZYZ_CSharp_Extension.dll
-        asset_content_type: application/octet-stream
