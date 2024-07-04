@@ -4,13 +4,9 @@ on:
   push:
     branches:
       - master
-    paths-ignore:
-      - '.github/**'
   pull_request:
     branches:
       - master
-    paths-ignore:
-      - '.github/**'
 
 jobs:
   build_and_release:
@@ -58,7 +54,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ github.workspace }}/build/ZYZ_CSharp_Extension${{ steps.version.outputs.project_version }}.nupkg
+        asset_path: ${{ github.workspace }}/build/ZYZ_CSharp_Extension.${{ steps.version.outputs.project_version }}.nupkg
         asset_name: ZYZ_CSharp_Extension-${{ steps.version.outputs.project_version }}.nupkg
         asset_content_type: application/zip
 
