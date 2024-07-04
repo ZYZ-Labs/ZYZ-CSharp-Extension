@@ -8,6 +8,7 @@ using ZXing;
 using ZXing.Common;
 using ZXing.QrCode;
 using ZXing.QrCode.Internal;
+using ZYZ_CSharp_Extension.Core;
 
 namespace ZYZ_CSharp_Extension.ZXingCode
 {
@@ -22,14 +23,7 @@ namespace ZYZ_CSharp_Extension.ZXingCode
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
-            int[] pixels = new int[width * height];
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    pixels[y * width + x] = bitmap.GetPixel(x, y).ToArgb();
-                }
-            }
+            byte[] pixels = BitmapUtils.GetBitmapBytes(bitmap);
             var luminanceSource = new RGBLuminanceSource(pixels, width, height);
             var binaryBitmap = new BinaryBitmap(new HybridBinarizer(luminanceSource));
             var result = new QRCodeReader().decode(binaryBitmap);
