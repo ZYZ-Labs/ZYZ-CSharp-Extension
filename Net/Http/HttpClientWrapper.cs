@@ -8,6 +8,6 @@ namespace ZYZ_CSharp_Extension.Net.Http
 {
     public class HttpClientWrapper
     {
-        private HttpClient httpClient;
+
     }
 }
