@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZYZ-CSharp-Extension", "ZYZ-CSharp-Extension.csproj", "{9B22C0F1-0C36-4B8B-8281-F1265577B1BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZYZ-CSharp-Extension", "ZYZ-CSharp-Extension.csproj", "{9B22C0F1-0C36-4B8B-8281-F1265577B1BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZYZ-CSharp-Extension-Sample", "..\ZYZ-CSharp-Extension-Sample\ZYZ-CSharp-Extension-Sample.csproj", "{3D40C8B4-9080-4F24-9C65-F3515FFC9A3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9B22C0F1-0C36-4B8B-8281-F1265577B1BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B22C0F1-0C36-4B8B-8281-F1265577B1BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B22C0F1-0C36-4B8B-8281-F1265577B1BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D40C8B4-9080-4F24-9C65-F3515FFC9A3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D40C8B4-9080-4F24-9C65-F3515FFC9A3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D40C8B4-9080-4F24-9C65-F3515FFC9A3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D40C8B4-9080-4F24-9C65-F3515FFC9A3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
