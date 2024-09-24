@@ -2,11 +2,8 @@ name: ZYZ_CSharp_Extension
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+    tags:
+      - '*.*.*'  # Triggers the action only when a tag with the format x.x.x is pushed
 
 jobs:
   build_and_release:
@@ -14,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
 
@@ -43,8 +40,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.version.outputs.project_version }}
-        release_name: Release v${{ steps.version.outputs.project_version }}
+        tag_name: ${{ github.ref_name }}  # Uses the pushed tag name
+        release_name: Release ${{ github.ref_name }}
         draft: false
         prerelease: false
 
