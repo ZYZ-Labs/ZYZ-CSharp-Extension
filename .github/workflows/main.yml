@@ -3,7 +3,7 @@ name: ZYZ_CSharp_Extension
 on:
   push:
     tags:
-      - '*.*.*'  # Triggers the action only when a tag with the format x.x.x is pushed
+      - '*.*.*'  # 仅在推送符合 x.x.x 格式的标签时触发
 
 jobs:
   build_and_release:
@@ -40,7 +40,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref_name }}  # Uses the pushed tag name
+        tag_name: ${{ github.ref_name }}  # 使用推送的标签名称
         release_name: Release ${{ github.ref_name }}
         draft: false
         prerelease: false
@@ -64,3 +64,6 @@ jobs:
         asset_path: ${{ github.workspace }}/build/ZYZ-CSharp-Extension.dll
         asset_name: ZYZ_CSharp_Extension-${{ steps.version.outputs.project_version }}.dll
         asset_content_type: application/octet-stream
+
+    - name: Publish to NuGet
+      run: dotnet nuget push ${{ github.workspace }}/build/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
