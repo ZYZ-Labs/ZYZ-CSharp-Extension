@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using System.Text;
 using ZXing;
 using ZXing.Common;
@@ -15,19 +16,57 @@ namespace ZYZ_CSharp_Extension.ZXingCode
     public static class QRCodeUtils
     {
         /// <summary>
-        /// 读取二维码
+        /// 读取二维码返回字符串，根据编码器
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <param name="encoding"></param>
+        /// <param name="toHex"></param>
+        /// <returns></returns>
+        public static string ReadQRCodeString(Bitmap bitmap, Encoding encoding = null, bool toHex = false)
+        {
+            string text = ReadQRCode(bitmap, encoding).Text;
+            if (toHex)
+            {
+                return ConvertUtils.ByteArrayToHexString(encoding.GetBytes(text));
+            }
+            else
+            {
+                return text;
+            }
+        }
+        /// <summary>
+        /// 读取二维码的原始byte数组
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
+        public static byte[] ReadQRCodeRawBytes(Bitmap bitmap, Encoding encoding = null)
+        {
+            return ReadQRCode(bitmap, encoding).RawBytes;
+        }
+        /// <summary>
+        /// 读取二维码结果
         /// </summary>
         /// <param name="bitmap"></param>
         /// <returns></returns>
-        public static string ReadQRCode(Bitmap bitmap)
+        public static Result ReadQRCode(Bitmap bitmap, Encoding encoding = null)
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
             byte[] pixels = BitmapUtils.GetBitmapBytes(bitmap);
             var luminanceSource = new RGBLuminanceSource(pixels, width, height);
             var binaryBitmap = new BinaryBitmap(new HybridBinarizer(luminanceSource));
-            var result = new QRCodeReader().decode(binaryBitmap);
-            return result.Text;
+            Dictionary<DecodeHintType, object> hints = new Dictionary<DecodeHintType, object>();
+            if (encoding == null)
+            {
+                hints.Add(DecodeHintType.CHARACTER_SET, Encoding.Latin1.EncodingName);
+            }
+            else
+            {
+                hints.Add(DecodeHintType.CHARACTER_SET, encoding.EncodingName);
+            }
+            var result = new QRCodeReader().decode(binaryBitmap, hints);
+            return result;
         }
 
         /// <summary>

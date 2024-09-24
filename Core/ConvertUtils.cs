@@ -24,5 +24,15 @@ namespace ZYZ_CSharp_Extension.Core
             }
             return bytes;
         }
+
+        /// <summary>
+        /// byte数组转十六进制字符串
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static string ByteArrayToHexString(byte[] bytes)
+        {
+            return BitConverter.ToString(bytes).Replace("-", "");
+        }
     }
 }
